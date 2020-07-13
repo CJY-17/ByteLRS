@@ -1,6 +1,9 @@
 <template>
   <div id="app">
+    <transition name="into" mode="out-in">
     <router-view/>
+    </transition>
+    
   </div>
 </template>
 
@@ -11,12 +14,21 @@ export default {
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+.into-enter-active,.into-leave-active{
+  transition: 0.7s;
+  transition-property: transform,opacity;
+}
+.into-enter{
+  opacity: 0;
+  transform: translateX(375rem);
+}
+.into-leave-to{
+  opacity: 0;
+  transform: translateX(-375rem);
+}
+#app{
+  /* height: 667rem; */
+  /* width: 100%;
+  height: 100%; */
 }
 </style>

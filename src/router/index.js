@@ -4,6 +4,10 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 const Home = () => import('../page/home/index.vue')
+const Rule = () => import('../page/home/rule.vue')
+const DayRule = () => import('../page/home/dayrule.vue')
+const DarkRule = () => import('../page/home/darkrule.vue')
+const Skill = () => import('../page/home/skill.vue')
 const CreateRoom = () => import('../page/createroom/index.vue')
 const JoinRoom = () => import('../page/joinroom/index.vue')
 const OwnerRoom = () => import('../page/ownerroom/index.vue')
@@ -22,6 +26,28 @@ export default new Router({
     {
       path: '/home',
       component: Home
+    },
+    {
+      path: '/rule',
+      component: Rule,
+      children: [
+        {
+          path: '/rule',
+          redirect: 'dayrule'
+        },
+        {
+          path:'dayrule',
+          component:DayRule
+        },
+        {
+          path:'darkrule',
+          component:DarkRule
+        },
+        {
+          path:'skill',
+          component:Skill
+        }
+      ]
     },
     {
       path: '/createroom',

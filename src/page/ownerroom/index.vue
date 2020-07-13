@@ -9,7 +9,7 @@ export default {
   name: 'OwnerRoom',
   data () {
     return {}
-  }
+  },
 }
 </script>
 
