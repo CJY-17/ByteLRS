@@ -11,7 +11,8 @@
             <div class="name">狼人数量</div>
             <div class="num_chos">
               <button class="sub" @click="sub1">－</button>
-              <input  class="num" type="number" readonly="readonly" v-model.number="wolfNum">
+              <!-- <input  class="num" type="number" readonly="readonly" v-model.number="wolfNum"> -->
+              <div class="num">{{wolfNum}}</div>
               <button class="add" @click="add1">＋</button>
             </div>
           </div>
@@ -19,7 +20,8 @@
             <div class="name">村民数量</div>
             <div class="num_chos">
               <button class="sub" @click="sub2">－</button>
-              <input  class="num" type="number" readonly="readonly" v-model.number="villagerNum" min="2" max="3">
+              <!-- <input  class="num" type="number" readonly="readonly" v-model.number="villagerNum" min="2" max="3"> -->
+              <div class="num">{{villagerNum}}</div>
               <button class="add" @click="add2">＋</button>
             </div>
           </div>
@@ -119,9 +121,10 @@
     }
     .header{
       font-weight: 500;
-      padding-top: 24rem;
+      height: 43rem;
+      /* padding-top: 24rem; */
       text-align: center;
-      line-height: 24rem;
+      line-height: 43rem;
       font-size: 20rem;
     }
     .content{
@@ -201,7 +204,7 @@
       flex: 1;
       font-size: 16rem;
       width: 35rem;
-      height: 27rem;
+      height: 29rem;
     }
     .sub:active,.add:active{
       background-color: #fff;
@@ -215,11 +218,14 @@
     .num{
       display: block;
       flex: 1;
+      text-align: center;
+      line-height: 27rem;
       width: 22rem;
-      height: 22rem;
+      height: 27rem;
       margin: 0 2rem;
       font-size: 14rem;
-      outline: none;
+      background-color: #F2F3F5;
+      border: 1rem solid #F2F3F5;
     }
     .checkbox{
       width: 16rem;

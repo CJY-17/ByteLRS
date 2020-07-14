@@ -58,10 +58,11 @@
     z-index: 80;
   }
   .header{
+    height: 43rem;
     font-weight: 500;
-    padding-top: 24rem;
+    /* padding-top: 24rem; */
     text-align: center;
-    line-height: 24rem;
+    line-height: 43rem;
     font-size: 20rem;
   }
   .content{
