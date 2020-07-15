@@ -14,7 +14,7 @@
           </div>
           <div class="btn">
           <button class="cancel" @click="sendStatus">取消</button>
-          <button class="comfirm" @click="jumpUser">确认</button>
+          <button class="confirm" @click="jumpUser">确认</button>
        </div>
         </div>
     </div>
@@ -119,7 +119,7 @@
     user-select: none;
     font-size: 16rem;
   }
-  .cancel,.comfirm{
+  .cancel,.confirm{
     flex:1;
     outline: none;
     border: 0 solid #ebedf0;
@@ -128,7 +128,7 @@
     background-color: #fff;
     font-size: 16rem;
   }
-  .cancel:active,.comfirm:active{
+  .cancel:active,.confirm:active{
     color:#fff;
     background-color: #9ED99D;
   }

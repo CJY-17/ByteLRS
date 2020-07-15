@@ -24,6 +24,7 @@ export default{
     change_setting () {
       this.is_show = !this.is_show
       this.$emit('change_setting', this.is_show)
+      this.is_show=false;
     }
   },
   // 让父组件给子组件传值（此时当前组件在父组件中得显示状态）

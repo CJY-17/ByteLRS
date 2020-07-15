@@ -111,6 +111,8 @@ export default {
     border-right: 2rem solid #ebedf0;
     text-align: center;
     flex: 1;
+    background-color: #fff;
+    color: #000;
   }
 
   .mute_text{
@@ -122,5 +124,9 @@ export default {
     position:absolute;
     top: 10rem;
     right: 10rem;
+  }
+  .not_confirm:active,.confirm:active{
+    color:#fff;
+    background-color: #9ED99D;
   }
 </style>
