@@ -22,6 +22,7 @@
   </template>
   
   <script>
+  import {Toast} from '../../../static/Toast.js';
   export default {
     name: 'JoinRoom',
     data () {
@@ -36,7 +37,15 @@
         this.$emit('func',this.joinShow);
       },
       jumpUser(){
-        this.$router.push('/userroom');
+        if (this.userName==''||this.userName==' ') {
+          Toast("昵称不能为空，请填写昵称",1500);
+        }else if(this.roomNum==''||this.roomNum==' '){
+          Toast("房间号不对,请重新输入",1500);
+        }
+        else{
+          this.$router.push('/userroom');
+        }
+        // Toast("我是好人",3000)
       }
     },
   }

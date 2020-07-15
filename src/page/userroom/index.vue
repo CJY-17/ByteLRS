@@ -172,6 +172,7 @@ export default {
   }
   .send{
     display: block;
+    font-size: 15rem;
     position: absolute;
     text-align: center;
     line-height: 30rem;

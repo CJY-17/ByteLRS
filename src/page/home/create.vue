@@ -52,6 +52,7 @@
     </div>
     </template>
     <script>
+    import {Toast} from '../../../static/Toast.js';
     export default {
       name: 'CreateRoom',
       data () {
@@ -70,7 +71,16 @@
           this.$emit('func',this.createShow);
         },
         jumpOwner(){
-          this.$router.push('/ownerroom');
+          var total = this.wolfNum+this.villagerNum+this.checkWitch+this.checkProphet+this.checkHunter;
+          if (this.ownerName==''||this.ownerName==' ') {
+            Toast("昵称不能为空,请填写昵称",1500);
+          }else if (total<6||total>8) {
+            Toast("人数配置不对,请参考游戏规则",1500);
+          }else{
+            this.$router.push('/ownerroom');
+          }
+          
+          
         },
         sub1(){
           if (this.wolfNum>2) {
