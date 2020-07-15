@@ -5,7 +5,9 @@
         <player v-for="(item,index) in players_info" :key="index" v-bind:cplayer_info="item" class="player"></player>
       </div>
       <!-- <div class="general_setting"> -->
+      <transition name="show">
       <generalSetting v-show="is_show" class="general_setting"  @cancel="change_setting" @comfirm="change_setting"></generalSetting>
+      </transition>
       <div class="chat_box">
         <div class="info_area"></div>
       </div>
@@ -179,4 +181,13 @@ export default {
     background-color: burlywood;
     margin-left: 250rem;
   }
+.show-enter-active,.show-leave-active{
+  transition:all 0.7s;
+}
+.show-enter,.show-leave-to{
+  opacity: 0;
+}
+.show-enter-to,.show-leave{
+  opacity: 1;
+}
 </style>
