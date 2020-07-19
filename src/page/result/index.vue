@@ -38,7 +38,6 @@ export default {
         this.winner = res.body.winner;
         this.loser = res.body.loser;
       })
-
     },
     getRoomID(){
       console.log(this.$route.params.room_id);
@@ -72,6 +71,20 @@ export default {
     background: url("/static/image/operate.png") no-repeat;
     background-size: cover;
     overflow: scroll;
+    position: relative;
+  }
+  .back{
+    width: 40rem;
+    height: 40rem;
+    position: absolute;
+    text-align: center;
+    line-height: 40rem;
+    top:80rem;
+    left: 20rem;
+    font-size: 20rem;
+    font-weight: 900;
+    border-radius: 50%;
+    background-color: #F5C973;
   }
   .page_result, .text1, .text2{
     width: 160rem;

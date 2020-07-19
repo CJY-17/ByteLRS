@@ -1,5 +1,5 @@
 <template>
-  <div class="main_box">
+  <div class="_box">
     <div class="box_name">
       常规设置
     </div>
@@ -48,7 +48,7 @@ export default {
 }
 </script>
 <style>
-  .main_box {
+  ._box {
     width: 300rem;
     height: 250rem;
     border:1rem solid #ebedf0 ;

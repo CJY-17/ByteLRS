@@ -31,7 +31,7 @@
           </ul>
           </div>
           <div class="but">
-          <button class="_but" style="width: 80rem;height:40rem;font-size:22rem" @click="jumpIndex">确认</button>
+          <button class="_but" style="width: 80rem;height:40rem;font-size:22rem" @click="jumpIndex">返回</button>
           </div>
       </div>
       
@@ -60,7 +60,7 @@ export default {
   },
   methods: {
     jumpIndex(){
-    this.$router.push('home')
+    this.$router.push('result')
   },/*
   getRank:function(){
       this.$http.get('getRank').then(function(response){
