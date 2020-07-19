@@ -26,15 +26,17 @@ export default {
     width: 80rem;
     height: 100rem;
     border-radius: 10rem;
-    background-color: #5755be;
+    background: url("/static/image/card1.png");
     display: inline-block;
+    background-size: cover;
+    background-color: #06063a;
   }
   .serial_num {
     width: 20rem;
     height: 20rem;
     border-radius: 50%;
-    background-color:#acbdf4;
-    border: 1rem solid #5330b6;
+    background-color:#ecb96a;
+    border: 1rem solid #94703a;
     font-size: 10rem;
     text-align: center;
     line-height: 20rem;
@@ -43,8 +45,10 @@ export default {
     width: 40rem;
     height: 40rem;
     border-radius: 50%;
-    background-color:#33307d;
+    color: rgb(243, 239, 239);
+    background-color:#a78958d7;
     margin: 0 auto;
+    margin-top: 20rem;
     font-size: 10rem;
     text-align: center;
     line-height: 40rem;
@@ -58,6 +62,6 @@ export default {
     font-size: 10rem;
     color: white;
     text-align: center;
-    line-height: 20rem;
+    line-height: 0rem;
   }
 </style>

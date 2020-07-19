@@ -65,36 +65,43 @@
   <style scoped>
     .box{
       position: relative;
-      background-color:#A27978 ;
+      background-color:#06063a ;
       width: 100%;
       height: 720rem;
+      color: rgb(216, 212, 212);
     }
   .title_box{
       width: 100%;
       height: 55rem;
       display: flex;
-      background-color: #A27978;
+      background-color: #06063a;
       align-items: center;
   }
   .back{
       flex: 1;
       font-size: 20rem;
+      height: 55rem;
+      position: relative;
   }
   .title{
-      flex: 1.6;
+      flex: 1.5;
       font-size: 20rem;
   }
   .text{
+      position: absolute;
       width: 50rem;
       height: 50rem;
       text-align: center;
       line-height: 48rem;
+      left: 20rem;
+      top:0rem;
       
   }
   .list{
       display: flex;
       width: 100%;
-      background-color: #A17776;
+      background-color: #06063a;
+      border: 1rem solid rgb(155, 153, 153);
       
   }
   .list_text{

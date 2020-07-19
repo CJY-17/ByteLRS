@@ -64,23 +64,83 @@
           checkProphet:true,
           checkWitch:false,
           checkHunter:true,
+          ownerroom_data:{},
         }
       },
       methods: {
         sendStatus(){
           this.$emit('func',this.createShow);
         },
-        jumpOwner(){
-          var total = this.wolfNum+this.villagerNum+this.checkWitch+this.checkProphet+this.checkHunter;
+       async jumpOwner(){
+          var identity_data = [];
+          var wolf = this.wolfNum;
+          var civlian = this.villagerNum;
+          var prophet =this.checkProphet ? 1:0;
+          var witch = this.checkWitch ? 1:0;
+          var hunter = this.checkHunter ? 1:0;
+          var room_id = parseInt(Math.random()*10000);
+          sessionStorage.setItem('room_id', room_id);
+          var role_num = this.wolfNum+this.villagerNum+this.checkWitch+this.checkProphet+this.checkHunter;
+          var room_data={
+            wolf,
+            civlian,
+            prophet,
+            witch,
+            hunter,
+            room_id,
+            role_num,
+          };
+          console.log(room_data);
+          for(let i = 0;i<wolf;i++){
+                identity_data.push('wolf');
+              }
+              for(let i = 0;i<civlian;i++){
+                identity_data.push('civlian');
+              }
+              for(let i = 0;i<prophet;i++){
+                identity_data.push('prophet');
+              }
+              for(let i = 0;i<hunter;i++){
+                identity_data.push('hunter');
+              }
+              for(let i = 0;i<witch;i++){
+                identity_data.push('witch');
+              }
+              console.log(identity_data);
+              this.ownerroom_data.identity_data = identity_data;
+              this.ownerroom_data.room_id = room_id;
+              this.ownerroom_data.role_num = role_num;
+              console.log(this.ownerroom_data);
           if (this.ownerName==''||this.ownerName==' ') {
             Toast("昵称不能为空,请填写昵称",1500);
-          }else if (total<6||total>8) {
+          }else if (role_num<6||role_num>8) {
             Toast("人数配置不对,请参考游戏规则",1500);
-          }else{
-            this.$router.push('/ownerroom');
+          }else if(this.checkProphet==false){
+            Toast("预言家必须选中",1500);
           }
-          
-          
+          else{
+            console.log(this.room_info);
+            //服务端接收的既是一个对象,不能将数据写在对象中传入，否则数据库会重新建立一个对象字段
+             await this.$http.post('createroom',{
+              wolf,
+              civlian,
+              prophet,
+              witch,
+              hunter,
+              room_id,
+              role_num,
+          }).then(function(res){
+                console.log(res);
+                if (res.body.message=='room exist') {
+                    Toast("房间出现错误，请重新创建",1500);
+                  }else if(res.body.message=='success'){
+                  this.$router.push({path:'owerroom',name:'OwnerRoom', params : {ownerroom_data:this.ownerroom_data}});
+                  }
+              });
+             
+              //通过params传递数据时，需要使用路由名
+              
+           }
         },
         sub1(){
           if (this.wolfNum>2) {

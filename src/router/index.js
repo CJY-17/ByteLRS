@@ -16,7 +16,7 @@ const Operate = () => import('../page/operate/index.vue')
 const Show = () => import('../page/show/index.vue')
 const TopList = () => import('../page/toplist/index.vue')
 const Result = () => import('../page/result/index.vue')
-
+const Leaderboard = () => import('../page/leaderboard/index.vue')
 export default new Router({
   routes: [
     {
@@ -26,6 +26,10 @@ export default new Router({
     {
       path: '/home',
       component: Home
+    },
+    {
+      path: '/leaderboard',
+      component: Leaderboard
     },
     {
       path: '/rule',
@@ -58,14 +62,17 @@ export default new Router({
       component: JoinRoom
     },
     {
+      name: 'OwnerRoom',
       path: '/ownerroom',
       component: OwnerRoom
     },
     {
+      name:'UserRoom',
       path: '/userroom',
       component: UserRoom
     },
     {
+      name:'Result',
       path: '/result',
       component: Result
     },
@@ -78,6 +85,7 @@ export default new Router({
       component: Show
     },
     {
+      name:'Operate',
       path: '/operate',
       component: Operate
     }

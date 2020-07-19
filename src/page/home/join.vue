@@ -5,11 +5,11 @@
         <div class="content">
           <div class="infor">
             <div class="name">你的昵称</div>
-            <input class="name_text" type="text" placeholder="你的昵称" v-model="userName">
+            <input class="name_text" type="text" oninput="if(value.length > 4)value = value.slice(0, 4)" placeholder="你的昵称" v-model="userName">
           </div>
           <div class="infor">
             <div class="name">房间号</div> 
-            <input class="name_text" type="number" placeholder="房间号" v-model="roomNum">
+            <input class="name_text" type="number" placeholder="房间号" v-model.number="roomNum">
             </div>
           </div>
           <div class="btn">
@@ -32,18 +32,42 @@
         roomNum:'',
       }
     },
+    created() {
+    },
     methods: {
+      
       sendStatus(){
         this.$emit('func',this.joinShow);
       },
-      jumpUser(){
+      //加入房间，判断房间是否存在，判断房间人数是否已满
+     async jumpUser(){
+     var message;
+      var player_id = parseInt(Math.random()*10000);
+      sessionStorage.setItem('player_id', player_id);
         if (this.userName==''||this.userName==' ') {
+          
           Toast("昵称不能为空，请填写昵称",1500);
         }else if(this.roomNum==''||this.roomNum==' '){
-          Toast("房间号不对,请重新输入",1500);
-        }
-        else{
-          this.$router.push('/userroom');
+          Toast("房间号不能为空",1500);
+        }else{
+          await this.$http.post('joinroom',{
+                room_id:this.roomNum,
+                player_name:this.userName,
+                player_id:player_id,
+                state:'game',
+                win:false,
+                rank:0,
+                }).then(function(res){ 
+                  console.log(res);
+                  message = res.body.message;
+              })
+              console.log(message);
+                 if (message=='no room') {
+                    Toast("房间或角色出错，请重新确认",1500);
+                  }else if(message=='success'){
+                    sessionStorage.setItem('room_id', this.roomNum);
+                    this.$router.push({name:'UserRoom',path:'/userroom',params:{player_id:player_id,}});
+                  }
         }
         // Toast("我是好人",3000)
       }

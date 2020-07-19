@@ -1,26 +1,26 @@
 <template>
   <div class="box">
-      <toplist @change_setting = "jumpSet"  ></toplist>
+      <toplist @change_setting = "jumpSet" :room_id="room_id" ></toplist>
       <div class="player_box">
         <player v-for="(item,index) in players_info" :key="index" v-bind:cplayer_info="item" class="player"></player>
       </div>
-      <!-- <div class="general_setting"> -->
       <transition name="show">
       <generalSetting v-show="is_show" class="general_setting"  @cancel="change_setting" @comfirm="change_setting"></generalSetting>
       </transition>
       <div class="chat_box">
         <div class="info_area"></div>
-      </div>
-      
+      </div>      
       <div class="textarea_box" v-show="textarea_is_show">
         <textarea class="textarea"></textarea>
       </div>
-      <div class="ready" @click="next_step"> 准备</div>
+      <div class="ready" @click="next_step"> 查看身份</div>
       <div class="bottom_box">
         <span class="input_button" @click="input_button_clicked"></span>
         <span class="send" @click="send">发送</span>
       </div>
-      <!-- </div> -->
+      <transition name="show">
+        <show v-show="identity_show" @func="close" class="identity_show" :info_arr="info_arr"></show>
+      </transition>
   </div>
 </template>
 
@@ -28,6 +28,7 @@
 import toplist from './toplist.vue'
 import player from './player.vue'
 import generalSetting from './generalSetting'
+import show from './show'
 export default {
   name: 'OwnerRoom',
   data () {
@@ -46,13 +47,22 @@ export default {
         {id: 8, name: '8', state: '准备中..'}
       ],
       is_show: false,
-      textarea_is_show: false
+      textarea_is_show: false,
+      identity_show:false,
+      player_id:0,
+      info_arr:[],
+      room_id:0,
     }
   },
   components: {
     toplist,
     player,
-    generalSetting
+    generalSetting,
+    show,
+  },
+  created() {
+   this.receive_playerID();
+   this.room_id= sessionStorage.getItem('room_id');
   },
   methods: {
     jumpSet (isShow) {
@@ -65,11 +75,27 @@ export default {
     input_button_clicked () {
       this.textarea_is_show = !this.textarea_is_show
     },
-    next_step () {
-      // this.$router.push({path: '/show'})
+    close(identity_show){
+      this.identity_show= identity_show;
+    },
+   async next_step () {
+     console.log(this.player_id);
+     const player_id = this.player_id;
+     await this.$http.post('getPlayerData',{player_id,}).then(function (res) {
+        console.log(res);
+        this.info_arr = res.body.data;
+      })
+      this.identity_show = true;
     },
     send () {
 
+    },
+    receive_playerID(){
+      const id=sessionStorage.getItem('player_id');
+      console.log(id);
+      // sessionStorage.getItem 获取到的是字符串  需要转换
+      this.player_id = parseInt(id);
+      console.log(this.player_id);
     }
   }
 }
@@ -79,6 +105,10 @@ export default {
   /* 最外层的框 */
   .box{
     width: 100%;
+    background: url("/static/image/night.png");
+    background-color: #06063a;
+    background-size: cover;
+    height: 720rem;
   }
   /* 中间的玩家框 */
   .player_box{
@@ -97,24 +127,28 @@ export default {
   }
   /* 常规设置 */
   .general_setting{
-    width: 300rem;
-    height: 250rem;
+    background-color: #fff;
+  }
+  .general_setting,.identity_show{
+    /* width: 300rem;
+    height: 250rem; */
     position: absolute;
     top: 0rem;
     left: 0rem;
     right: 0rem;
     bottom: 0rem;
-    margin: auto;
+    /* margin: auto; */
     z-index: 100;
-    background-color: #fff;
   }
+  
   /* 聊天区域  */
   .chat_box{
-    width: 90%;
+    width: 80%;
     height: 120rem;
     margin: 0 auto;
     border-radius: 15rem;
     overflow: hidden;
+    background: rgba(255, 255, 255, 0.74);
   }
   /* 显示消息的区域 */
   .info_area{
@@ -148,6 +182,7 @@ export default {
   .textarea{
     margin: 10% auto auto 15%;
     opacity: 0.7;
+    background:white ;
     width: 70%;
     height: 45%;
     font-size: 24rem;
@@ -160,8 +195,8 @@ export default {
     position: absolute;
     left: 40%;
     top: 450rem;
-    background-color: coral;
-    border: 2rem solid burlywood;
+    background-color: #ecb96a;
+    
     border-radius: 10rem;
     text-align: center;
     line-height: 40rem;
@@ -169,6 +204,9 @@ export default {
   .bottom_box{
     position: relative;
     top: 5rem;
+    background-color: #06063a;
+    height: auto;
+    display: block;
   }
   .send{
     display: block;
@@ -178,8 +216,9 @@ export default {
     line-height: 30rem;
     width: 50rem;
     height: 30rem;
-    border-radius: 15rem;
-    background-color: burlywood;
+    border-radius: 5rem;
+    color: rgb(255, 254, 254);
+   border: 2rem solid #ecb96a;
     margin-left: 250rem;
   }
 .show-enter-active,.show-leave-active{

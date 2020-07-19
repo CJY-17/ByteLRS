@@ -3,8 +3,10 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-
-Vue.config.productionTip = false
+import  VueResource  from  'vue-resource';
+Vue.use(VueResource);
+Vue.config.productionTip = false;
+Vue.http.options.root = 'https://af8yv1.fn.thelarkcloud.com/';
 
 /* eslint-disable no-new */
 new Vue({

@@ -51,11 +51,10 @@ export default {
   .main_box {
     width: 300rem;
     height: 250rem;
-    /* box-sizing: border-box; */
     border:1rem solid #ebedf0 ;
     border-radius: 30rem;
-    position: absolute;
     overflow: hidden;
+    margin: 150rem auto auto auto;
   }
 
   .box_name,

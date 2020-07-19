@@ -1,6 +1,6 @@
 <template>
   <div class="box">
-      <toplist @change_setting = "jumpSet"  ></toplist>
+      <toplist @change_setting = "jumpSet" :room_id="room_id"></toplist>
       <div class="player_box">
         <player v-for="(item,index) in players_info" :key="index" v-bind:cplayer_info="item" class="player"></player>
       </div>
@@ -16,11 +16,13 @@
         <textarea class="textarea"></textarea>
       </div> -->
       <!-- </div> -->
+      <div class="get_info" @click="get_info" >确认准备</div>
       <div class="start_game" @click="next_step" >开始游戏</div>
   </div>
 </template>
 
 <script>
+import {Toast} from '../../../static/Toast.js';  
 import toplist from '../userroom/toplist.vue'
 import player from '../userroom/player.vue'
 import generalSetting from '../userroom/generalSetting'
@@ -43,12 +45,19 @@ export default {
       ],
       is_show: false,
       textarea_is_show: false,
+      room_id:0,
+      identity_data:[],
+      role_num:0,
+      player_data:[],
     }
   },
   components: {
     toplist,
     player,
     generalSetting
+  },
+  created() {
+    this.receive_data();
   },
   methods: {
     jumpSet (isShow) {
@@ -62,8 +71,53 @@ export default {
       this.is
       this.textarea_is_show = !this.textarea_is_show
     },
-    next_step () {
-      this.$router.push({path: '/show'})
+    //开始游戏，上传角色数据
+   async next_step () {
+      if (this.player_data.length<this.role_num) {
+        Toast("人数不足，无法开始游戏",1500);
+      }else{
+       await this.$http.post('gamebegin',{player_data:this.player_data}).then(function(res){
+        console.log(res);
+      });
+      this.$router.push({name:'Operate',path: '/operate',params:{room_id:this.room_id}});
+      }
+      
+    },
+    //获取当前房间玩家信息，随机分配身份
+    async get_info(){
+      var player_data;
+     await this.$http.post('getPlayerData',{room_id:this.room_id}).then(function(res){
+        console.log(res.body.data);
+      //  var player_data =res.body.data;
+      player_data=res.body.data;
+      })
+      console.log(player_data);
+      if (player_data.length<this.role_num) {
+        Toast("玩家未准备好，请等待",1500);
+        return;
+      }else{
+        for (let i = 0; i < this.identity_data.length; i++) {
+          player_data[i].identity = this.identity_data[i]; 
+      }
+      console.log(player_data);
+      this.player_data = player_data;
+      }
+      
+    },
+    //接收create/again身份数据
+    receive_data(){
+      console.log(this.$route.params.ownerroom_data);
+      const data = this.$route.params.ownerroom_data;
+      this.room_id=data.room_id;
+      this.role_num = data.role_num;
+      // console.log(data);
+      console.log(this.role_num);
+      console.log(this.room_id);
+      // arr.sort(() => Math.random() - 0.5);打乱身份顺序，以便随机分配
+      console.log(data.identity_data);
+      data.identity_data.sort(() => Math.random() - 0.5);
+      this.identity_data = data.identity_data;
+      console.log(this.identity_data);
     }
   }
 }
@@ -73,6 +127,10 @@ export default {
   /* 最外层的框 */
   .box{
     width: 100%;
+    background: url("/static/image/night.png");
+    background-color: #06063a;
+    background-size: cover;
+    height: 720rem;
   }
   /* 中间的玩家框 */
   .player_box{
@@ -104,7 +162,7 @@ export default {
   }
   /* 聊天区域  */
   .chat_box{
-    width: 90%;
+    width: 80%;
     height: 120rem;
     margin: 0 auto;
     /* position: absolute;
@@ -113,6 +171,7 @@ export default {
     border-radius: 15rem;
     overflow: hidden;
     /* line-height: 200rem; */
+    background: rgba(255, 255, 255, 0.74);
   }
   /* 显示消息的区域 */
   .info_area{
@@ -133,6 +192,19 @@ export default {
     background-color: burlywood;
     margin: 10rem 20rem auto auto;
   }
+  .get_info{
+    font-size: 14rem;
+    width: 20%;
+    height: 40rem;
+    position: absolute;
+    left: 40%;
+    top: 390rem;
+     background-color: #ecb96a;
+    border-radius: 10rem;
+    text-align: center;
+    line-height: 40rem;
+    z-index: 1;
+  }
   .start_game{
     font-size: 14rem;
     width: 20%;
@@ -140,8 +212,7 @@ export default {
     position: absolute;
     left: 40%;
     top: 444rem;
-    background-color: coral;
-    border: 2rem solid burlywood;
+    background-color: #ecb96a;
     border-radius: 10rem;
     text-align: center;
     line-height: 40rem;
