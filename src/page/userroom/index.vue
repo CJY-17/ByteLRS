@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import {Toast} from '../../../static/Toast.js'; 
 import toplist from './toplist.vue'
 import player from './player.vue'
 import generalSetting from './generalSetting'
@@ -83,9 +84,17 @@ export default {
      const player_id = this.player_id;
      await this.$http.post('getPlayerData',{player_id,}).then(function (res) {
         console.log(res);
+        if (res.body.data[0].identity==undefined) {
+          Toast("请等待房主开始游戏",1500);
+      }else{
         this.info_arr = res.body.data;
+        this.identity_show = true;
+      }
+        
       })
-      this.identity_show = true;
+      
+      
+      
     },
     send () {
 

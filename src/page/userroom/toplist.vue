@@ -1,11 +1,11 @@
 <template>
   <div class="top_box">
     <span class="return" >
-       <span class="return_button" @click.stop="jump">&lt;</span>
+       <span class="return_button" @click.stop="jump"><img style="width:32rem;height:32rem;margin-top:5rem" src="/static/image/back_white.png"></span>
     </span>
     <span class="room_info">房间{{room_id}}</span>
     <span class="setting">
-      <span class="setting_button" @click.stop="change_setting">...</span>
+      <span class="setting_button" @click.stop="change_setting"><img style="width:32rem;height:32rem;margin-top:5rem" src="/static/image/more.png"></span>
     </span>
   </div>
 </template>

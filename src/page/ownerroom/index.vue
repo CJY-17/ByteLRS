@@ -96,6 +96,7 @@ export default {
         Toast("玩家未准备好，请等待",1500);
         return;
       }else{
+        Toast("玩家准备完毕，请开始游戏",1500);
         for (let i = 0; i < this.identity_data.length; i++) {
           player_data[i].identity = this.identity_data[i]; 
       }

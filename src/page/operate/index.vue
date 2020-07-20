@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import {Toast} from '../../../static/Toast.js'; 
 export default {
   name: 'Operate',
   data () {
@@ -41,6 +42,7 @@ export default {
       await this.$http.post('updateState',{player_id}).then(function(res){
         console.log(res);
       })
+      Toast("该玩家已经出局",1500);
     },
     //客户端的数组传到服务端处理会出现数据对应不正确报错
   async good_win(){
